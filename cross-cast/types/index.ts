@@ -9,5 +9,6 @@ export type TwitterMetrics = {
 export type TweetData = {
   content: string
   metrics: TwitterMetrics
-  date: Date
+  date: Date,
+  image?: string
 }
