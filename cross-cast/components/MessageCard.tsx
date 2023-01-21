@@ -1,50 +1,72 @@
-"use client"
+'use client';
 
-import type { TweetData } from "@/types"
-import { Card, CardHeader, CardBody, CardFooter, Text, Flex, Avatar, Box, Image, Heading, Button, HStack } from '@chakra-ui/react'
-import Reaction from "./Reaction"
+import type { GenericPost } from '@/types/all';
+import { Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Text,
+  Flex,
+  Avatar,
+  Box,
+  Image,
+  Heading,
+  Button,
+  HStack,
+} from '@chakra-ui/react';
+import Reaction from './Reaction';
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import remarkGithub from 'remark-github'
+import './MessageCard.style.css';
 
+export default function MessageCard(props: { post: GenericPost }) {
+  const gitRepository = props.post.url.split('/').slice(3,5).join('/');
 
-export default function MessageCard({data}: {data: TweetData}){
-
-  const component = (
+  return (
     <Card maxW='md'>
-      {/* <CardHeader>
-        <Text>Tweet</Text>
-      </CardHeader> */}
+      {props.post.title && (
+        <CardHeader>
+          <Text>{props.post.title}</Text>
+        </CardHeader>
+      )}
       <CardBody>
-        <Text>
-          {data.content}
-        </Text>
-      {data.image && <Image
-        objectFit='cover'
-        src='https://images.unsplash.com/photo-1531403009284-440f080d1e12?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
-        alt='Chakra UI'
-        />}
+        <span className='overwriteChakra'>
+          <ReactMarkdown remarkPlugins={[remarkGfm, [remarkGithub, { repository: gitRepository }]]}>{props.post.content}</ReactMarkdown>
+        </span>
+        {props.post.image && (
+          <Image
+            objectFit='cover'
+            src={props.post.image}
+            alt={props.post.author.name}
+          />
+        )}
 
-      <HStack spacing='10px'>
-        {Object.keys(data.metrics).map((key, index) => {
-          return <Reaction icon={key} numInteractions={data.metrics[key]} key={index} />;
-        })}
-
-      </HStack>
-        </CardBody>
+        <HStack spacing='10px'>
+          {
+            // GitHub + Slack?
+            props.post.reactions
+              .filter(reaction => reaction.icon !== 'url' && reaction.icon !== 'total_count' && reaction.numInteractions !== 0)
+              .sort((reaction1, reaction2) => reaction2.numInteractions - reaction1.numInteractions)
+              .slice(0, 5)
+              .map((reaction, index) => {
+                return <Reaction icon={reaction.icon} numInteractions={reaction.numInteractions} key={index} />;
+              })
+          }
+        </HStack>
+      </CardBody>
 
       <CardFooter
         justify='space-between'
         flexWrap='wrap'
-        sx={{
-          '& > button': {
-            minW: '136px',
-          },
-        }}
       >
         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-          <Avatar name='Segun Adebayo' size='xs' src='https://bit.ly/sage-adebayo' />
+          <a href={props.post.author.url} style={{ textDecoration: 'none' }}>
+            <Avatar name={props.post.author.name} size='md' src={props.post.author.avatar} />
+            {/* TODO: Maybe sm instead? */}
+          </a>
         </Flex>
       </CardFooter>
     </Card>
-  )
-
-  return component
+  );
 }

@@ -1,8 +1,9 @@
+import { GenericPost } from '@/types/all';
 import MessageCard from '../components/MessageCard'
 
 export default async function Home() {
 
-  const data = await (await fetch(process.env.PUBLIC_URL + "/api/sampleData")).json();
+  const data = await (await fetch(process.env.PUBLIC_URL + "/api/github?owner=vercel&repo=next.js")).json() as GenericPost;
   console.log(data, process.env.PUBLIC_URL)
   return (
     <main>
@@ -11,7 +12,7 @@ export default async function Home() {
           data && <p>{JSON.stringify(data)}</p>
         }
         <br/>
-        <MessageCard data={data}/>
+        <MessageCard post={data}/>
     </main>
   )
 }
