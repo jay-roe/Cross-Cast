@@ -50,7 +50,7 @@ export default function MainContainer({ posts } : { posts: GenericPost[] }) {
     return post.date
   }
   
-  const dataDateAdjusted: GenericPost[] = clientPosts?.map(post => (
+  const dataDateAdjusted: GenericPost[] = clientPosts.map(post => (
     {
       ...post,
       date: new Date(post.date)

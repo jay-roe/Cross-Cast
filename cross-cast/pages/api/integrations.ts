@@ -1,8 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { GenericPost, Origin } from '@/types/all'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import slackConfig from '@/config/slack.config'
-import twitterConfig from '@/config/twitter.config'
 import integrationsConfig from '@/config/integrations.config'
 import { TweetFilter } from './twitter'
 
@@ -20,7 +18,7 @@ type IntegrationsRequestParams = {
 
 function sortChronologically(posts: GenericPost[]) {
     posts.sort(function(a,b){
-        return new Date(b.date) - new Date(a.date);
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
       });
 
     return posts;

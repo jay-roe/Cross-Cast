@@ -2,7 +2,7 @@ import { GenericPost } from '../types/all'
 import MainContainer from '@/components/MainContainer';
 
 export default async function Home() {
-  let data: GenericPost[];
+  let data = [] as GenericPost[];
   try {
     data = await (await fetch(`${process.env.REACT_APP_PUBLIC_URL}/api/integrations?days=7`)).json() as GenericPost[];
   } catch(err) {

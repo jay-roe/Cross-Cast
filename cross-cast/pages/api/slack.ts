@@ -116,6 +116,9 @@ export default async function handler(
   let posts: GenericPost[] = [];
   for (let i = 0; i < elementCountInt; i++) {
     let thisSlackData = redone.at(i);
+    if (!thisSlackData) {
+      break;
+    }
     var realDate = new Date(0);
     realDate.setUTCSeconds(parseInt(thisSlackData.date));
     const postData = {
