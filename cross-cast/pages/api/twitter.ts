@@ -76,6 +76,7 @@ export default async function handler(
     // convert raw tweet response to our type
     for(let i = 0; i < maxCountInt; i++) {
         const raw_tweet = raw_tweets_data.at(i);
+        if (!raw_tweet) break;
         const tweetMetrics = {
             retweet_count: raw_tweet.public_metrics?.retweet_count || 0,
             reply_count: raw_tweet.public_metrics?.reply_count || 0,

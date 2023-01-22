@@ -3,7 +3,7 @@
 import { GenericPost, Origin } from '../types/all'
 import MessageCardContainer from '../components/MessageCardContainer'
 import DateContainer from '@/components/DateContainer';
-import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Flex, FormControl, FormLabel, Grid, GridItem, IconButton, Menu, MenuButton, Select, Switch, useDisclosure,  Box, Image, HStack } from '@chakra-ui/react';
+import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Flex, FormControl, FormLabel, Grid, GridItem, IconButton, Menu, MenuButton, Select, Switch, useDisclosure,  Box, Image, HStack, Center } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai'
 import React from 'react';
@@ -64,13 +64,15 @@ export default function MainContainer({ posts } : { posts: GenericPost[] }) {
 
   return (
     <Grid>
-       <HStack justifyContent='center' alignItems='center' spacing='50px' h={'150px'}>
-      <Flex justifyContent='center' alignItems='center'>
-        <Box w='155px'>
+      <Center marginLeft={{base: '0', md: '40px'}}>
+      {/* <Center marginLeft={{base: '0', md: '40px'}}> */}
+        <Box width={[ 'xs', 'md', 'lg', 'xl' ]}>
+        <Flex justifyContent='space-between' alignItems='center' direction='horizontal' >
+        {/* <Box w='155px'> */}
           <Image src='/crosscast-logo.png' alt='CrossCast Logo' width='50px' height='50px'  borderRadius='full'/>
-        </Box>
+        {/* </Box> */}
         <h1 style={{ textAlign: 'center', marginBlock: '1em' }}>CrossCast Timeline</h1>
-        <Box w='70px' paddingLeft='100px'>
+        {/* <Box w='70px' paddingLeft='100px'> */}
         <IconButton aria-label='Menu' ref={btnRef} colorScheme='gray' onClick={onOpen} icon={<AiOutlineMenu />}  />
         <Drawer
           isOpen={isOpen}
@@ -105,9 +107,10 @@ export default function MainContainer({ posts } : { posts: GenericPost[] }) {
             </DrawerBody>
           </DrawerContent>
         </Drawer>
-        </Box>
+        {/* </Box> */}
       </Flex>
-      </HStack>
+      </Box>
+      </Center>
       {
         getDateSet(dataDateAdjusted).map((date, index) => (
           <GridItem key={index}>

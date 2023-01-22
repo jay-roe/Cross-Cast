@@ -25,7 +25,7 @@ export default function MessageCard(props: { post: GenericPost }) {
   const date = new Date(props.post.date);
 
   return (
-    <Card id='pointed' mb='1.5em' width={[ 'xs', 'md', 'lg', 'xl' ]}>
+    <Card id='pointed' mb='1.5em' width={[ '280px', '420px', 'lg', 'xl' ]}>
       {props.post.title && (
         <CardHeader>
           <Text as='h2'>{props.post.title}</Text>
@@ -73,7 +73,7 @@ export default function MessageCard(props: { post: GenericPost }) {
               <Text>{props.post.author.name}</Text>
             </Flex>
           </a>
-          <span>{`${date.getHours() % 12}:${String(date.getMinutes()).padStart(2, "0")} ${date.getHours() / 12 >= 1 ? 'PM' : 'AM'}`}</span>
+          <span>{`${String(date.getHours() % 12 === 0 ? 12 : date.getHours() % 12).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")} ${date.getHours() / 12 >= 1 ? 'PM' : 'AM'}`}</span>
         </Flex>
       </CardFooter>
     </Card>
