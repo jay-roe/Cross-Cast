@@ -1,12 +1,12 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import Client from 'twitter-api-sdk'
+import twitterConfig from '@/config/twitter.config';
 
 const client = new Client(process.env.TWITTER_BEARER_TOKEN);
 
 type TwitterRequestParams = {
     days: string
-    user: string
 }
 
 export type GenericPost = {
@@ -41,7 +41,8 @@ export default async function handler(
 ) {
     let posts: GenericPost[] = [];
     
-    let { days, user } = req.query as TwitterRequestParams;
+    let { user } = twitterConfig;
+    let { days } = req.query as TwitterRequestParams;
 
     // remove random quotations that are added
     user = user.replaceAll("\"", "")
