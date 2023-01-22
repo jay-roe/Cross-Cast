@@ -29,7 +29,6 @@ type SlackData = {
   content: string,
   author: string,
   image: string,
-  //channel: string,
   reactions: Reactions[],
   totalReactions: number,
   date: string,
@@ -102,7 +101,6 @@ export default async function handler(
           content: messages.text,
           author: (await slack.users.info({ user: messages.user })).user.real_name,
           image: (await slack.users.info({ user: messages.user })).user.profile.image_32,
-          // channel: my_channels.name,
           reactions: messages.reactions.map(reaction => {
             return {
               icon: reaction.name,
@@ -138,11 +136,12 @@ export default async function handler(
       origin: Origin.Slack,
       url: "",
       title: "",
-      image: thisSlackData.image || "",
+      image: "",
       content: thisSlackData.content || "",
       reactions: thisSlackData.reactions,
       author: {
-        name: thisSlackData.author
+        name: thisSlackData.author,
+        avatar: thisSlackData.image
       },
       date: realDate
     }
