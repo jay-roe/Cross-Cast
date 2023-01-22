@@ -35,7 +35,7 @@ export default async function handler(
       url: latestReleaseData.author.html_url
     },
     title: latestReleaseData.name,
-    date: latestReleaseData.published_at,
+    date: new Date(latestReleaseData.published_at),
     content: latestReleaseData.body_html || latestReleaseData.body_text || latestReleaseData.body,
     reactions: Object.keys(latestReleaseData.reactions).map(reaction => {
       return {

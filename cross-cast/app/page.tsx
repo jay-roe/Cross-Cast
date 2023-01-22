@@ -1,18 +1,12 @@
 import { GenericPost } from '@/types/all';
-import MessageCard from '../components/MessageCard'
+import MessageCardContainer from '../components/MessageCardContainer'
 
 export default async function Home() {
 
   const data = await (await fetch(process.env.PUBLIC_URL + "/api/github?owner=vercel&repo=next.js")).json() as GenericPost;
-  console.log(data, process.env.PUBLIC_URL)
   return (
     <main>
-        <h1>Cross Cast</h1>
-        {
-          data && <p>{JSON.stringify(data)}</p>
-        }
-        <br/>
-        <MessageCard post={data}/>
+        <MessageCardContainer post={data}/>
     </main>
   )
 }

@@ -24,10 +24,10 @@ export default function MessageCard(props: { post: GenericPost }) {
   const gitRepository = props.post.url.split('/').slice(3,5).join('/');
 
   return (
-    <Card maxW='md'>
+    <Card maxW='lg'>
       {props.post.title && (
         <CardHeader>
-          <Text>{props.post.title}</Text>
+          <Text as='h2'>{props.post.title}</Text>
         </CardHeader>
       )}
       <CardBody>
@@ -42,7 +42,7 @@ export default function MessageCard(props: { post: GenericPost }) {
           />
         )}
 
-        <HStack spacing='10px'>
+        <HStack mt="5" spacing='10px'>
           {
             // GitHub + Slack?
             props.post.reactions
@@ -55,16 +55,17 @@ export default function MessageCard(props: { post: GenericPost }) {
           }
         </HStack>
       </CardBody>
-
+          <hr></hr>
       <CardFooter
         justify='space-between'
         flexWrap='wrap'
       >
-        <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
+        <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap' justifyContent='space-between'>
           <a href={props.post.author.url} style={{ textDecoration: 'none' }}>
             <Avatar name={props.post.author.name} size='md' src={props.post.author.avatar} />
             {/* TODO: Maybe sm instead? */}
           </a>
+          <span>{props.post.date}</span>
         </Flex>
       </CardFooter>
     </Card>

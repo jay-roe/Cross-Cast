@@ -1,4 +1,6 @@
-.overwriteChakra h3 {
-  font-size: 1.17em;
-  font-weight: bold;
+.overwriteChakra a {
+  color: blue;
+}
+.overwriteChakra ul {
+  padding-left: 2em;
 }
