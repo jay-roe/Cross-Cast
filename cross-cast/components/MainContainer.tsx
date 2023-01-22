@@ -3,7 +3,7 @@
 import { GenericPost, Origin } from '../types/all'
 import MessageCardContainer from '../components/MessageCardContainer'
 import DateContainer from '@/components/DateContainer';
-import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Flex, FormControl, FormLabel, Grid, GridItem, IconButton, Menu, MenuButton, Select, Switch, useDisclosure } from '@chakra-ui/react';
+import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Flex, FormControl, FormLabel, Grid, GridItem, IconButton, Menu, MenuButton, Select, Switch, useDisclosure,  Box, Image, HStack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai'
 import React from 'react';
@@ -64,9 +64,14 @@ export default function MainContainer({ posts } : { posts: GenericPost[] }) {
 
   return (
     <Grid>
+       <HStack justifyContent='center' alignItems='center' spacing='50px' h={'150px'}>
       <Flex justifyContent='center' alignItems='center'>
+        <Box w='128px'>
+          <Image src='/crosscast-logo.png' alt='CrossCast Logo' width='50px' height='50px'  borderRadius='full'/>
+        </Box>
         <h1 style={{ textAlign: 'center', marginBlock: '1em' }}>CrossCast Timeline</h1>
-        <IconButton aria-label='Menu' ref={btnRef} colorScheme='teal' onClick={onOpen} icon={<AiOutlineMenu />} />
+        <Box w='70px' paddingLeft='80px'>
+        <IconButton aria-label='Menu' ref={btnRef} colorScheme='teal' onClick={onOpen} icon={<AiOutlineMenu />}  />
         <Drawer
           isOpen={isOpen}
           placement='right'
@@ -97,13 +102,9 @@ export default function MainContainer({ posts } : { posts: GenericPost[] }) {
             </DrawerBody>
           </DrawerContent>
         </Drawer>
-
-        {/* <Menu alignSelf='flex-end'>
-          <MenuButton as={Button} rightIcon={<BsChevronDown />}>
-            Actions
-          </MenuButton>
-        </Menu> */}
+        </Box>
       </Flex>
+      </Hstack>
       {
         getDateSet(dataDateAdjusted).map((date, index) => (
           <GridItem key={index}>
