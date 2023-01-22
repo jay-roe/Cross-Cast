@@ -63,7 +63,7 @@ export default async function handler(
         return (a < b) ? -sortOrder : (a > b) ? sortOrder : 0;
     }
 
-    raw_tweets_data?.sort(nestedSort("public_metrics", "like_count","desc"))
+    // raw_tweets_data?.sort(nestedSort("public_metrics", "like_count","desc"))
 
     // convert raw tweet response to our type
     for(let i = 0; i < maxCountInt; i++) {
