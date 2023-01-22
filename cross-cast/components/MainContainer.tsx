@@ -66,11 +66,11 @@ export default function MainContainer({ posts } : { posts: GenericPost[] }) {
     <Grid>
        <HStack justifyContent='center' alignItems='center' spacing='50px' h={'150px'}>
       <Flex justifyContent='center' alignItems='center'>
-        <Box w='128px'>
+        <Box w='155px'>
           <Image src='/crosscast-logo.png' alt='CrossCast Logo' width='50px' height='50px'  borderRadius='full'/>
         </Box>
         <h1 style={{ textAlign: 'center', marginBlock: '1em' }}>CrossCast Timeline</h1>
-        <Box w='70px' paddingLeft='80px'>
+        <Box w='70px' paddingLeft='100px'>
         <IconButton aria-label='Menu' ref={btnRef} colorScheme='teal' onClick={onOpen} icon={<AiOutlineMenu />}  />
         <Drawer
           isOpen={isOpen}
@@ -104,7 +104,7 @@ export default function MainContainer({ posts } : { posts: GenericPost[] }) {
         </Drawer>
         </Box>
       </Flex>
-      </Hstack>
+      </HStack>
       {
         getDateSet(dataDateAdjusted).map((date, index) => (
           <GridItem key={index}>
