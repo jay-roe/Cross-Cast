@@ -2,21 +2,18 @@ import { GenericPost, Origin } from '@/types/all'
 import { ReleaseRaw, Release } from '@/types/github'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Octokit } from 'octokit'
+import githubConfig from "@/config/github.config"
+import { GenericPost, Origin } from './integrations'
 
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN
 })
 
-export type GitHubQueryParams = {
-  owner: string
-  repo: string
-}
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<GenericPost>
 ) {
-  const { owner, repo } = req.query as GitHubQueryParams;
+  const { owner, repo } = githubConfig;
 
   const latestRelease = await octokit.request('GET /repos/{owner}/{repo}/releases/latest', {
     owner: owner,
@@ -44,8 +41,6 @@ export default async function handler(
       }
     })
   }
-
-  console.log(cleanRelease)
 
   res.status(200).json(cleanRelease)
 }
