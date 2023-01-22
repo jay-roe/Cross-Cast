@@ -3,8 +3,9 @@
 import { GenericPost } from '../types/all'
 import MessageCardContainer from '../components/MessageCardContainer'
 import DateContainer from '@/components/DateContainer';
-import { Grid, GridItem } from '@chakra-ui/react';
+import { Button, Flex, Grid, GridItem, Menu, MenuButton } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
+import { BsChevronDown } from 'react-icons/bs'
 
 export default function MainContainer({ posts } : { posts: GenericPost[] }) {
   function getTimestamp(date: Date) {
@@ -26,9 +27,9 @@ export default function MainContainer({ posts } : { posts: GenericPost[] }) {
   ))
 
   function getDateSet(posts: GenericPost[]) {
-    console.log('DATE SET:'+ posts.map(p => new Date(getTimestamp(assertDate(p)))).filter((date, i, self) => 
-    self.findIndex(d => new Date(d).getTime() === new Date(date).getTime()) === i
-  ))
+  //   console.log('DATE SET:'+ posts.map(p => new Date(getTimestamp(assertDate(p)))).filter((date, i, self) => 
+  //   self.findIndex(d => new Date(d).getTime() === new Date(date).getTime()) === i
+  // ))
     return posts.map(p => new Date(getTimestamp(assertDate(p)))).filter((date, i, self) => 
     self.findIndex(d => new Date(d).getTime() === new Date(date).getTime()) === i
   )
@@ -38,7 +39,14 @@ export default function MainContainer({ posts } : { posts: GenericPost[] }) {
 
   return (
     <Grid>
-      <h1 style={{ textAlign: 'center', marginBlock: '1em' }}>CrossCast Timeline</h1>
+      <Flex justifyContent='center' alignItems='center'>
+        <h1 style={{ textAlign: 'center', marginBlock: '1em' }}>CrossCast Timeline</h1>
+        <Menu alignSelf='flex-end'>
+          <MenuButton as={Button} rightIcon={<BsChevronDown />}>
+            Actions
+          </MenuButton>
+        </Menu>
+      </Flex>
       {
         getDateSet(dataDateAdjusted).map((date, index) => (
           <GridItem key={index}>
@@ -46,9 +54,11 @@ export default function MainContainer({ posts } : { posts: GenericPost[] }) {
               {
                 posts
                   .filter(post => {
-                    console.log(getDateSet(dataDateAdjusted));
+                    console.log(post);
                     
-                    console.log(`Post timestamp: ${getTimestamp(assertDate(post))}\nDate container timestamp: ${getTimestamp(date)}`);
+                    // console.log(getDateSet(dataDateAdjusted));
+                    
+                    // console.log(`Post timestamp: ${getTimestamp(assertDate(post))}\nDate container timestamp: ${getTimestamp(date)}`);
                     
                     return getTimestamp(assertDate(post)) === getTimestamp(date)
                   })

@@ -23,11 +23,11 @@ export default function Reaction(props: { icon: string, numInteractions: number}
       case "-1":
         return '👎';
         // return <IoMdThumbsDown />;
-      case "laugh":
+      case "laugh": case "laughing":
         return '😄';
       case "confused":
         return '😕';
-      case "hooray":
+      case "hooray": case "tada":
         return '🎉';
       case "eyes":
         return '👀';
@@ -35,7 +35,7 @@ export default function Reaction(props: { icon: string, numInteractions: number}
         return '🚀';
       case "pray":
         return '🙏';
-      case "ok":
+      case "white_check_mark":
         return '✅';
       default:
     }

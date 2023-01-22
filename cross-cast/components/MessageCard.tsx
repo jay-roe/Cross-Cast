@@ -21,7 +21,8 @@ import remarkGithub from 'remark-github'
 import './MessageCard.style.css';
 
 export default function MessageCard(props: { post: GenericPost }) {
-  const gitRepository = props.post.url.split('/').slice(3,5).join('/');
+  const gitRepository = props.post.origin === Origin.GitHub ? props.post.url.split('/').slice(3,5).join('/'): '';
+  const date = new Date(props.post.date);
 
   return (
     <Card id='pointed' mb='1.5em' width={[ 'xs', 'md', 'lg', 'xl' ]}>
@@ -32,7 +33,11 @@ export default function MessageCard(props: { post: GenericPost }) {
       )}
       <CardBody>
         <span className='overwriteChakra'>
-          <ReactMarkdown remarkPlugins={[remarkGfm, [remarkGithub, { repository: gitRepository }]]}>{props.post.content.replaceAll('\n', '\r\n')}</ReactMarkdown>
+          {
+            props.post.origin === Origin.GitHub
+            ? <ReactMarkdown remarkPlugins={[remarkGfm, [remarkGithub, { repository: gitRepository }]]}>{props.post.content}</ReactMarkdown>
+            : <ReactMarkdown remarkPlugins={[remarkGfm]}>{props.post.content}</ReactMarkdown>
+          }
         </span>
         {props.post.image && (
           <Image
@@ -68,7 +73,7 @@ export default function MessageCard(props: { post: GenericPost }) {
               <Text>{props.post.author.name}</Text>
             </Flex>
           </a>
-          <span>{new Date(props.post.date).toTimeString()}</span>
+          <span>{`${date.getHours() % 12}:${String(date.getMinutes()).padStart(2, "0")} ${date.getHours() / 12 >= 1 ? 'PM' : 'AM'}`}</span>
         </Flex>
       </CardFooter>
     </Card>
