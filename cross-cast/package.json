@@ -9,19 +9,31 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.4.9",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@next/font": "13.1.4",
     "@slack/events-api": "^3.0.1",
     "@slack/web-api": "^6.8.0",
     "@types/node": "18.11.18",
-    "@types/react": "18.0.27",
-    "@types/react-dom": "18.0.10",
+    "encoding": "^0.1.13",
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.4",
+    "framer-motion": "^8.5.0",
     "next": "13.1.4",
     "octokit": "^2.0.11",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-icons": "^4.7.1",
+    "react-markdown": "^8.0.5",
+    "remark-gfm": "^3.0.1",
+    "remark-github": "^11.2.4",
+    "swr": "^2.0.1",
     "twitter-api-sdk": "^1.2.1",
     "typescript": "4.9.4"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10"
   }
 }

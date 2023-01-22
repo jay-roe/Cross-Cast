@@ -7,7 +7,7 @@ export type Release = {
     html_url: string
   }
   name: string | null
-  published_at: string | null
+  published_at: Date | null
   body?: string | null
   reactions?: {
     total_count?: number
@@ -15,11 +15,10 @@ export type Release = {
     "-1"?: number
     laugh?: number
     confused?: number
-    heart: number | undefined
-    hooray: number | undefined
-    eyes: number | undefined
-    rocket: number | undefined
-    [k: string]: unknown  
+    heart?: number 
+    hooray?: number 
+    eyes?: number
+    rocket?: number
   }
 }
 
@@ -65,7 +64,6 @@ export interface ReleaseRaw {
    */
   discussion_url?: string
   reactions?: ReactionRollup
-  [k: string]: unknown
 }
 /**
  * A GitHub user.
@@ -157,5 +155,4 @@ export interface ReactionRollup {
   hooray: number
   eyes: number
   rocket: number
-  [k: string]: unknown
 }

@@ -1,23 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { WebClient } from "@slack/web-api";
+import { GenericPost } from '@/types/all';
 
 const token = process.env.SLACK_BOT_TOKEN;
 const slack = new WebClient(token);
-
-export type GenericPost = {
-  origin: Origin
-  url: string
-  title: string
-  content: string
-  image?: string
-  reactions?: Reactions[]
-  author: {
-    name: string
-    avatar?: string
-    url?: string
-  }
-  date: Date
-}
 
 type Reactions = {
   icon: string

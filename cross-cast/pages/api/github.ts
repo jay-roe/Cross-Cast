@@ -1,8 +1,8 @@
+import { GenericPost, Origin } from '@/types/all'
 import { ReleaseRaw, Release } from '@/types/github'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Octokit } from 'octokit'
 import githubConfig from "@/config/github.config"
-import { GenericPost, Origin } from './integrations'
 
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN
@@ -10,7 +10,7 @@ const octokit = new Octokit({
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Release>
+  res: NextApiResponse<GenericPost[]>
 ) {
   const { owner, repo } = githubConfig;
 
@@ -19,7 +19,8 @@ export default async function handler(
     repo: repo
   });
 
-  const latestReleaseData: ReleaseRaw = latestRelease.data;
+  const latestReleaseData: ReleaseRaw = latestRelease.data;  
+  
 
   const cleanRelease: GenericPost = {
     origin: Origin.GitHub,
@@ -40,5 +41,5 @@ export default async function handler(
     })
   }
 
-  res.status(200).json(cleanRelease)
+  res.status(200).json([cleanRelease])
 }
