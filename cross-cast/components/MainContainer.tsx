@@ -19,6 +19,13 @@ export default function MainContainer({ posts } : { posts: GenericPost[] }) {
   const [filterType, setFilterType] = useState<TweetFilter>(TweetFilter.latest)
   const [integration, setIntegration] = useState<Origin | ''>('')
 
+  const handleIntegrationChange = (integration: string) => {
+    if (integration === Origin.GitHub) setIntegration(Origin.GitHub)
+    else if (integration === Origin.Slack) setIntegration(Origin.Slack)
+    else if (integration === Origin.Twitter) setIntegration(Origin.Twitter)
+    else setIntegration('')
+  }
+
   const handleSubmit = async () => {
     const newPosts = await (await fetch(`/api/integrations?days=7&filterType=${filterType}&integration=${integration}`)).json() as GenericPost[]
     console.log(newPosts);
@@ -79,7 +86,7 @@ export default function MainContainer({ posts } : { posts: GenericPost[] }) {
                   <Switch id='filterType' isChecked={filterType === TweetFilter.mostLiked} onChange={e => setFilterType(e.target.checked ? TweetFilter.mostLiked : TweetFilter.latest)} />
                   <FormLabel style={{ marginRight: '0' }} htmlFor='filterType'>Most Liked</FormLabel>
                 </Flex>
-                <Select value={integration} onChange={e => setIntegration(e.target.value)}>
+                <Select value={integration} onChange={e => handleIntegrationChange(e.target.value)}>
                   <option value=''>All</option>
                   <option value='GITHUB'>GitHub</option>
                   <option value='SLACK'>Slack</option>
@@ -90,6 +97,12 @@ export default function MainContainer({ posts } : { posts: GenericPost[] }) {
             </DrawerBody>
           </DrawerContent>
         </Drawer>
+
+        {/* <Menu alignSelf='flex-end'>
+          <MenuButton as={Button} rightIcon={<BsChevronDown />}>
+            Actions
+          </MenuButton>
+        </Menu> */}
       </Flex>
       {
         getDateSet(dataDateAdjusted).map((date, index) => (
@@ -98,6 +111,12 @@ export default function MainContainer({ posts } : { posts: GenericPost[] }) {
               {
                 clientPosts
                   .filter(post => {
+                    // console.log(post);
+                    
+                    // console.log(getDateSet(dataDateAdjusted));
+                    
+                    // console.log(`Post timestamp: ${getTimestamp(assertDate(post))}\nDate container timestamp: ${getTimestamp(date)}`);
+                    
                     return getTimestamp(assertDate(post)) === getTimestamp(date)
                   })
                   .map((post, index) => <MessageCardContainer key={index} post={post}/>)
