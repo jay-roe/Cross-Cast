@@ -4,29 +4,42 @@ import Client from 'twitter-api-sdk'
 
 const client = new Client(process.env.TWITTER_BEARER_TOKEN);
 
-type TwitterMetrics = {
-    retweet_count: number,
-    reply_count: number,
-    like_count: number,
-    quote_count: number
-}
-
-type TweetData = {
-    content: string
-    metrics: TwitterMetrics
-    date: Date
-}
-
 type TwitterRequestParams = {
     days: string
     user: string
 }
 
+export type GenericPost = {
+    origin: Origin
+    url: string
+    title: string
+    content: string
+    image?: string
+    reactions?: Reaction[]
+    author: {
+      name: string
+      avatar?: string
+      url?: string
+    }
+    date: Date
+  }
+  
+export enum Origin {
+GitHub = 'GITHUB',
+Slack = 'SLACK',
+Twitter = 'TWITTER',
+}
+
+type Reaction = {
+icon: string
+numInteractions: number
+}
+
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<TweetData[]>,
+    res: NextApiResponse<GenericPost[]>,
 ) {
-    let tweets: TweetData[] = [];
+    let posts: GenericPost[] = [];
     
     let { days, user } = req.query as TwitterRequestParams;
 
@@ -45,7 +58,7 @@ export default async function handler(
     const raw_tweets_response = (await client.tweets.usersIdTweets(user_id, {
         exclude: ["replies", "retweets"],
         start_time: tweets_since_date.toISOString(),
-        "tweet.fields": ["text", "public_metrics", "created_at"]
+        "tweet.fields": ["id", "text", "public_metrics", "created_at"]
     })).data;
 
     // convert raw tweet response to our type
@@ -56,13 +69,25 @@ export default async function handler(
             like_count: data.public_metrics?.like_count || 0,
             quote_count: data.public_metrics?.quote_count || 0
         }
-        const tweetData = {
+
+        const postData = {
+            origin: Origin.Twitter,
+            url: `https://twitter.com/${user}/status/${data.id}`,
+            title: "",
             content: data.text || "",
-            metrics: tweetMetrics,
+            reactions: [
+                { icon: "likes", numInteractions: tweetMetrics.like_count },
+                { icon: "retweets", numInteractions: tweetMetrics.retweet_count },
+                { icon: "quotes", numInteractions: tweetMetrics.quote_count },
+                { icon: "replies", numInteractions: tweetMetrics.reply_count }
+            ],
+            author: {
+                name: user
+            },
             date: new Date(Date.parse(data.created_at || ""))
         }
-        tweets.push(tweetData)
+        posts.push(postData)
     })
 
-    res.status(200).json(tweets)
+    res.status(200).json(posts)
 }
