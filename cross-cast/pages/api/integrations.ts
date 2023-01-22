@@ -38,9 +38,9 @@ export default async function handler(
         filterType = TweetFilter.latest
     }
 
-    const twitterRequest = process.env.PUBLIC_URL + `/api/twitter?days=${days}&maxCount=${maxCount}&filterType=${filterType}`
-    const githubRequest = process.env.PUBLIC_URL + `/api/github`
-    const slackRequest = process.env.PUBLIC_URL + `/api/slack?days=${days}&maxCount=${maxCount}`
+    const twitterRequest = process.env.NEXT_PUBLIC_URL + `/api/twitter?days=${days}&maxCount=${maxCount}&filterType=${filterType}`
+    const githubRequest = process.env.NEXT_PUBLIC_URL + `/api/github`
+    const slackRequest = process.env.NEXT_PUBLIC_URL + `/api/slack?days=${days}&maxCount=${maxCount}`
 
 
 
