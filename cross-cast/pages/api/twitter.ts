@@ -8,6 +8,7 @@ const client = new Client(process.env.TWITTER_BEARER_TOKEN);
 
 type TwitterRequestParams = {
     days: string
+    maxCount: string
 }
   
 type Reaction = {
@@ -22,11 +23,13 @@ export default async function handler(
     let posts: GenericPost[] = [];
     
     let { user } = twitterConfig;
-    let { days } = req.query as TwitterRequestParams;
+    let { days, maxCount } = req.query as TwitterRequestParams;
 
     // remove random quotations that are added
     user = user.replaceAll("\"", "")
     days = days.replaceAll("\"", "")
+    maxCount.replaceAll("\"", "")
+    let maxCountInt = parseInt(maxCount)
 
     // configure tweet request
     const user_id = (await client.users.findUserByUsername(user)).data?.id || "";
@@ -53,20 +56,30 @@ export default async function handler(
         profile_image_url = user.profile_image_url || "";
     })
 
+    const nestedSort = (prop1, prop2 = null, direction = 'asc') => (e1, e2) => {
+        const a = prop2 ? e1[prop1][prop2] : e1[prop1],
+            b = prop2 ? e2[prop1][prop2] : e2[prop1],
+            sortOrder = direction === "asc" ? 1 : -1
+        return (a < b) ? -sortOrder : (a > b) ? sortOrder : 0;
+    }
+
+    raw_tweets_data?.sort(nestedSort("public_metrics", "like_count","desc"))
+
     // convert raw tweet response to our type
-    raw_tweets_data?.forEach(function (data) {
+    for(let i = 0; i < maxCountInt; i++) {
+        const raw_tweet = raw_tweets_data.at(i);
         const tweetMetrics = {
-            retweet_count: data.public_metrics?.retweet_count || 0,
-            reply_count: data.public_metrics?.reply_count || 0,
-            like_count: data.public_metrics?.like_count || 0,
-            quote_count: data.public_metrics?.quote_count || 0
+            retweet_count: raw_tweet.public_metrics?.retweet_count || 0,
+            reply_count: raw_tweet.public_metrics?.reply_count || 0,
+            like_count: raw_tweet.public_metrics?.like_count || 0,
+            quote_count: raw_tweet.public_metrics?.quote_count || 0
         }
 
         const postData = {
             origin: Origin.Twitter,
-            url: `https://twitter.com/${user}/status/${data.id}`,
+            url: `https://twitter.com/${user}/status/${raw_tweet.id}`,
             title: "",
-            content: data.text || "",
+            content: raw_tweet.text || "",
             reactions: [
                 { icon: "likes", numInteractions: tweetMetrics.like_count },
                 { icon: "retweets", numInteractions: tweetMetrics.retweet_count },
@@ -78,10 +91,10 @@ export default async function handler(
                 avatar: profile_image_url,
                 url: `https://twitter.com/${user}`
             },
-            date: new Date(Date.parse(data.created_at || ""))
+            date: new Date(Date.parse(raw_tweet.created_at || ""))
         }
         posts.push(postData)
-    })
+    }
 
     res.status(200).json(posts)
 }

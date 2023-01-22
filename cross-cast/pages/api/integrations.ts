@@ -2,6 +2,7 @@
 import { GenericPost, Origin } from '@/types/all'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import slackConfig from '@/config/slack.config'
+import twitterConfig from '@/config/twitter.config'
 
 type Reaction = {
 icon: string
@@ -10,7 +11,7 @@ numInteractions: number
 
 type IntegrationsRequestParams = {
     days: string
-    slackCount?: string
+    maxCount?: string
     integration?: Origin
 }
 
@@ -18,15 +19,22 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<GenericPost[]>
 ) {
-    let { days, slackCount, integration } = req.query as IntegrationsRequestParams;
+    let { days, maxCount, integration } = req.query as IntegrationsRequestParams;
 
-    if (!slackCount) {
-        slackCount = slackConfig.elementCountDefault
+    let slackMaxCount;
+    let twitterMaxCount;
+
+    if (!maxCount) {
+        slackMaxCount = slackConfig.maxCountDefault
+        twitterMaxCount = twitterConfig.maxCountDefault
+    } else {
+        slackMaxCount = maxCount
+        twitterMaxCount = maxCount
     }
 
-    const twitterRequest = process.env.PUBLIC_URL + `/api/twitter?days=${days}`
+    const twitterRequest = process.env.PUBLIC_URL + `/api/twitter?days=${days}&maxCount=${twitterMaxCount}`
     const githubRequest = process.env.PUBLIC_URL + `/api/github`
-    const slackRequest = process.env.PUBLIC_URL + `/api/slack?days=${days}&elementCount=${slackCount}`
+    const slackRequest = process.env.PUBLIC_URL + `/api/slack?days=${days}&maxCount=${slackMaxCount}`
 
 
 

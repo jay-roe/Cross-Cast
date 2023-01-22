@@ -1,9 +1,9 @@
 type SlackConfig = {
-    elementCountDefault: string
+    maxCountDefault: string
   }
   
 let slackConfig: SlackConfig = {
-    elementCountDefault: "5"
+  maxCountDefault: "5"
 }
   
 export default slackConfig;

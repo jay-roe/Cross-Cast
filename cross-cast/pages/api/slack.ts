@@ -29,7 +29,6 @@ type SlackData = {
   content: string,
   author: string,
   image: string,
-  //channel: string,
   reactions: Reactions[],
   totalReactions: number,
   date: string,
@@ -48,7 +47,7 @@ export enum Origin {
 
 type SlackRequestParams = {
   days: string
-  elementCount: string
+  maxCount: string
 }
 
 
@@ -62,10 +61,10 @@ export default async function handler(
   res: NextApiResponse<GenericPost[]>
 ) {
   const desired_channels: string[] = ["crosscast", "general", "random"]
-  const { days , elementCount } = req.query as SlackRequestParams;
+  const { days , maxCount } = req.query as SlackRequestParams;
 
   const daysTime = parseInt(days)
-  const elementCountInt = parseInt(elementCount)
+  const elementCountInt = parseInt(maxCount)
 
   const time = new Date();
   time.setDate(time.getDate() - daysTime) //make var
@@ -102,7 +101,6 @@ export default async function handler(
           content: messages.text,
           author: (await slack.users.info({ user: messages.user })).user.real_name,
           image: (await slack.users.info({ user: messages.user })).user.profile.image_32,
-          // channel: my_channels.name,
           reactions: messages.reactions.map(reaction => {
             return {
               icon: reaction.name,
@@ -138,11 +136,12 @@ export default async function handler(
       origin: Origin.Slack,
       url: "",
       title: "",
-      image: thisSlackData.image || "",
+      image: "",
       content: thisSlackData.content || "",
       reactions: thisSlackData.reactions,
       author: {
-        name: thisSlackData.author
+        name: thisSlackData.author,
+        avatar: thisSlackData.image
       },
       date: realDate
     }
