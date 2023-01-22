@@ -24,7 +24,7 @@ export default function MessageCard(props: { post: GenericPost }) {
   const gitRepository = props.post.url.split('/').slice(3,5).join('/');
 
   return (
-    <Card maxW='lg'>
+    <Card mb='1.5em' maxW='lg'>
       {props.post.title && (
         <CardHeader>
           <Text as='h2'>{props.post.title}</Text>

@@ -11,6 +11,7 @@ export type GenericPost = {
     url?: string
   }
   date: string | Date
+  timestamp?: number
 }
 
 export enum Origin {

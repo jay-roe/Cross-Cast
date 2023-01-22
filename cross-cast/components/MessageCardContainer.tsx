@@ -9,7 +9,7 @@ export default function MessageCardContainer(props: { post: GenericPost}) {
 
   return (
     <Center>
-      <Divider height='full' borderWidth={2} orientation="vertical" />
+      <Divider height='110' borderWidth={2} orientation="vertical" />
       <Box ml="3"></Box>
       <MessageCard post={props.post}/>
     </Center>
