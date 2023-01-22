@@ -18,7 +18,7 @@ export default function DateContainer({
         <Center>
           <Box width={[ 'xs', 'md', 'lg', 'xl' ]}>
             <Flex alignItems='center' gap='10px'>
-              <Divider  width='14' borderWidth='3px' borderColor='blue.900' borderRadius='6' />
+              <Divider  width='14' borderWidth='3px' borderColor='#000000' borderRadius='6' />
               <Text>{date.toLocaleDateString()}</Text>
             </Flex>
 

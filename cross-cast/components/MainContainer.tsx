@@ -71,7 +71,7 @@ export default function MainContainer({ posts } : { posts: GenericPost[] }) {
         </Box>
         <h1 style={{ textAlign: 'center', marginBlock: '1em' }}>CrossCast Timeline</h1>
         <Box w='70px' paddingLeft='100px'>
-        <IconButton aria-label='Menu' ref={btnRef} colorScheme='teal' onClick={onOpen} icon={<AiOutlineMenu />}  />
+        <IconButton aria-label='Menu' ref={btnRef} colorScheme='gray' onClick={onOpen} icon={<AiOutlineMenu />}  />
         <Drawer
           isOpen={isOpen}
           placement='right'
