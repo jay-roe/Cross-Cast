@@ -38,6 +38,14 @@ type IntegrationsRequestParams = {
     sortType?: TweetSort
 }
 
+function sortChronologically(posts: GenericPost[]) {
+    posts.sort(function(a,b){
+        return new Date(b.date) - new Date(a.date);
+      });
+
+    return posts;
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<GenericPost[]>
@@ -75,7 +83,9 @@ export default async function handler(
         const twitterPosts = await (await fetch(twitterRequest)).json() as GenericPost[];
         const githubPosts = await (await fetch(githubRequest)).json() as GenericPost[];
         const slackPosts = await (await fetch(slackRequest)).json() as GenericPost[];
-        res.status(200).json(twitterPosts.concat(githubPosts, slackPosts))
+
+        let allPosts = sortChronologically(twitterPosts.concat(githubPosts, slackPosts))
+        res.status(200).json(allPosts)
     }
     
 }
