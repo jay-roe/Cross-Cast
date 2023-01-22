@@ -3,6 +3,8 @@ import { GenericPost, Origin } from '@/types/all'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import slackConfig from '@/config/slack.config'
 import twitterConfig from '@/config/twitter.config'
+import integrationsConfig from '@/config/integrations.config'
+import { TweetSort } from './twitter'
 
 type Reaction = {
 icon: string
@@ -13,28 +15,26 @@ type IntegrationsRequestParams = {
     days: string
     maxCount?: string
     integration?: Origin
+    sortType?: TweetSort
 }
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<GenericPost[]>
 ) {
-    let { days, maxCount, integration } = req.query as IntegrationsRequestParams;
-
-    let slackMaxCount;
-    let twitterMaxCount;
+    let { days, maxCount, integration, sortType } = req.query as IntegrationsRequestParams;
 
     if (!maxCount) {
-        slackMaxCount = slackConfig.maxCountDefault
-        twitterMaxCount = twitterConfig.maxCountDefault
-    } else {
-        slackMaxCount = maxCount
-        twitterMaxCount = maxCount
+        maxCount = integrationsConfig.maxCountDefault
+    } 
+
+    if (!sortType) {
+        sortType = TweetSort.latest
     }
 
-    const twitterRequest = process.env.PUBLIC_URL + `/api/twitter?days=${days}&maxCount=${twitterMaxCount}`
+    const twitterRequest = process.env.PUBLIC_URL + `/api/twitter?days=${days}&maxCount=${maxCount}&sortType=${sortType}`
     const githubRequest = process.env.PUBLIC_URL + `/api/github`
-    const slackRequest = process.env.PUBLIC_URL + `/api/slack?days=${days}&maxCount=${slackMaxCount}`
+    const slackRequest = process.env.PUBLIC_URL + `/api/slack?days=${days}&maxCount=${maxCount}`
 
 
 

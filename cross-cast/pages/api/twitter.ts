@@ -9,7 +9,13 @@ const client = new Client(process.env.TWITTER_BEARER_TOKEN);
 type TwitterRequestParams = {
     days: string
     maxCount: string
+    sortType: TweetSort
 }
+
+export enum TweetSort {
+    latest = 'LATEST',
+    mostLiked = 'MOST_LIKED',
+  }
   
 type Reaction = {
 icon: string
@@ -23,7 +29,7 @@ export default async function handler(
     let posts: GenericPost[] = [];
     
     let { user } = twitterConfig;
-    let { days, maxCount } = req.query as TwitterRequestParams;
+    let { days, maxCount, sortType } = req.query as TwitterRequestParams;
 
     // remove random quotations that are added
     user = user.replaceAll("\"", "")
@@ -63,7 +69,9 @@ export default async function handler(
         return (a < b) ? -sortOrder : (a > b) ? sortOrder : 0;
     }
 
-    // raw_tweets_data?.sort(nestedSort("public_metrics", "like_count","desc"))
+    if (sortType == TweetSort.mostLiked) {
+        raw_tweets_data?.sort(nestedSort("public_metrics", "like_count","desc"))
+    }  // else will be by latest
 
     // convert raw tweet response to our type
     for(let i = 0; i < maxCountInt; i++) {
