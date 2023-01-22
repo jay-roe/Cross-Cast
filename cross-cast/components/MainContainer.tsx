@@ -32,14 +32,8 @@ export default function MainContainer({ posts } : { posts: GenericPost[] }) {
   ))
 
   function getDateSet(posts: GenericPost[]) {
-  //   console.log('DATE SET:'+ posts.map(p => new Date(getTimestamp(assertDate(p)))).filter((date, i, self) => 
-  //   self.findIndex(d => new Date(d).getTime() === new Date(date).getTime()) === i
-  // ))
     return posts.map(p => new Date(getTimestamp(assertDate(p)))).filter((date, i, self) => 
-    self.findIndex(d => new Date(d).getTime() === new Date(date).getTime()) === i
-  )
-
-    // return [...new Set(posts.map(post => assertDate(post)))];
+    self.findIndex(d => new Date(d).getTime() === new Date(date).getTime()) === i)
   }
 
   return (
