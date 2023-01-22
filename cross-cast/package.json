@@ -16,6 +16,7 @@
     "@slack/events-api": "^3.0.1",
     "@slack/web-api": "^6.8.0",
     "@types/node": "18.11.18",
+    "encoding": "^0.1.13",
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.4",
     "framer-motion": "^8.5.0",

@@ -10,11 +10,11 @@ export default function MessageCardContainer(props: { post: GenericPost}) {
   function getProviderIcon(provider: Origin) {
     switch(provider) {
       case Origin.GitHub:
-        return <AiFillGithub size='36px' /> 
+        return <AiFillGithub style={{ backgroundColor: "white", borderRadius: "50%" }} size='36px' /> 
       case Origin.Twitter:
-        return <AiFillTwitterCircle size='36px' />
+        return <AiFillTwitterCircle style={{ backgroundColor: "white", borderRadius: "50%" }} size='36px' />
       case Origin.Slack:
-        return <AiFillSlackCircle size='36px' />
+        return <AiFillSlackCircle style={{ backgroundColor: "white", borderRadius: "50%" }} size='36px' />
     }
   }
 

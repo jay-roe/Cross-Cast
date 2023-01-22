@@ -2,7 +2,12 @@ import { GenericPost } from '../types/all'
 import MainContainer from '@/components/MainContainer';
 
 export default async function Home() {
-  const data = await (await fetch(`${process.env.PUBLIC_URL}/api/integrations?days=7`)).json() as GenericPost[];
+  let data: GenericPost[];
+  try {
+    data = await (await fetch(`${process.env.REACT_APP_PUBLIC_URL}/api/integrations?days=7`)).json() as GenericPost[];
+  } catch(err) {
+    console.error(err)
+  }
   // console.log(JSON.stringify(data));
 
   // const direction = Math.round(Math.random() * 360); //To output a volue between 0 and 360 in degrees to be given to the linear-gradient.

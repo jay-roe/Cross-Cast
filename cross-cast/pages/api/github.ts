@@ -10,7 +10,7 @@ const octokit = new Octokit({
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<GenericPost>
+  res: NextApiResponse<GenericPost[]>
 ) {
   const { owner, repo } = githubConfig;
 
@@ -41,5 +41,5 @@ export default async function handler(
     })
   }
 
-  res.status(200).json(cleanRelease)
+  res.status(200).json([cleanRelease])
 }
