@@ -10,16 +10,16 @@ export default function DateContainer({
   date: Date
 }) {
   return (
-    <div style={{ backgroundColor: `#${Math.floor(Math.random()*16777215).toString(16)}` }}>
+    <div style={{ paddingBottom: '2em' }}>
       <GridItem>
         {children}
       </GridItem>
       <GridItem>
-        <Center >
-          <Box w='lg'>
+        <Center>
+          <Box width={[ 'xs', 'md', 'lg', 'xl' ]}>
             <Flex alignItems='center' gap='10px'>
+              <Divider  width='14' borderWidth='3px' borderColor='blue.900' borderRadius='6' />
               <Text>{date.toLocaleDateString()}</Text>
-              <Divider width={20} borderWidth='3px' />
             </Flex>
 
           </Box>

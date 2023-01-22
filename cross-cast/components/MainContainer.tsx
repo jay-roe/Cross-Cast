@@ -38,6 +38,7 @@ export default function MainContainer({ posts } : { posts: GenericPost[] }) {
 
   return (
     <Grid>
+      <h1 style={{ textAlign: 'center', marginBlock: '1em' }}>CrossCast Timeline</h1>
       {
         getDateSet(dataDateAdjusted).map((date, index) => (
           <GridItem key={index}>
@@ -58,13 +59,6 @@ export default function MainContainer({ posts } : { posts: GenericPost[] }) {
         ))
         
       }
-      {/* {
-        dataDateAdjusted.map((data, index) => 
-          <GridItem key={index}>
-            <MessageCardContainer post={data} />
-          </GridItem>
-        )
-      } */}
     </Grid>
   )
 }

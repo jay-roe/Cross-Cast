@@ -14,6 +14,10 @@ const theme = extendTheme({
         bg: 'gray.50',
         color: 'gray.900',
       },
+      h1: {
+        fontSize: '3xl',
+        fontWeight: 'bold'
+      },
       h2: {
         fontSize: '2xl',
         fontWeight: 'bold',

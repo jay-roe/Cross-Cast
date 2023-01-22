@@ -3,7 +3,6 @@ import { ReleaseRaw, Release } from '@/types/github'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Octokit } from 'octokit'
 import githubConfig from "@/config/github.config"
-import { GenericPost, Origin } from './integrations'
 
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN

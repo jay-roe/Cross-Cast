@@ -2,34 +2,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import Client from 'twitter-api-sdk'
 import twitterConfig from '@/config/twitter.config';
+import { GenericPost, Origin } from '@/types/all';
 
 const client = new Client(process.env.TWITTER_BEARER_TOKEN);
 
 type TwitterRequestParams = {
     days: string
 }
-
-export type GenericPost = {
-    origin: Origin
-    url: string
-    title: string
-    content: string
-    image?: string
-    reactions?: Reaction[]
-    author: {
-      name: string
-      avatar?: string
-      url?: string
-    }
-    date: Date
-  }
   
-export enum Origin {
-GitHub = 'GITHUB',
-Slack = 'SLACK',
-Twitter = 'TWITTER',
-}
-
 type Reaction = {
 icon: string
 numInteractions: number
@@ -59,6 +39,7 @@ export default async function handler(
     const raw_tweets_response = await client.tweets.usersIdTweets(user_id, {
         exclude: ["replies", "retweets"],
         start_time: tweets_since_date.toISOString(),
+        max_results: 100,
         expansions: ["author_id"],
         "tweet.fields": ["id", "author_id", "text", "public_metrics", "created_at"],
         "user.fields": ["profile_image_url"],

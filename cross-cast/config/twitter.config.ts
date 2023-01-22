@@ -3,7 +3,7 @@ type TwitterConfig = {
 }
 
 let twitterConfig: TwitterConfig = {
-  user: "vercel"
+  user: "potus"
 }
 
 export default twitterConfig;

@@ -24,7 +24,7 @@ export default function MessageCard(props: { post: GenericPost }) {
   const gitRepository = props.post.url.split('/').slice(3,5).join('/');
 
   return (
-    <Card mb='1.5em' maxW='lg'>
+    <Card id='pointed' mb='1.5em' width={[ 'xs', 'md', 'lg', 'xl' ]}>
       {props.post.title && (
         <CardHeader>
           <Text as='h2'>{props.post.title}</Text>
@@ -60,12 +60,15 @@ export default function MessageCard(props: { post: GenericPost }) {
         justify='space-between'
         flexWrap='wrap'
       >
-        <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap' justifyContent='space-between'>
+        <Flex flex='1' gap='4' alignItems='center' justifyContent='space-between'>
           <a href={props.post.author.url} style={{ textDecoration: 'none' }}>
-            <Avatar name={props.post.author.name} size='md' src={props.post.author.avatar} />
-            {/* TODO: Maybe sm instead? */}
+            <Flex alignItems='center' gap='3'>
+              <Avatar name={props.post.author.name} size='md' src={props.post.author.avatar} />
+              {/* TODO: Maybe sm instead? */}
+              <Text>{props.post.author.name}</Text>
+            </Flex>
           </a>
-          <span>{props.post.date.toLocaleString()}</span>
+          <span>{new Date(props.post.date).toTimeString()}</span>
         </Flex>
       </CardFooter>
     </Card>

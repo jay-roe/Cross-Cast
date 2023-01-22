@@ -4,3 +4,16 @@
 .overwriteChakra ul {
   padding-left: 2em;
 }
+
+#pointed:after,
+#pointed::after {
+  position: absolute;
+  top: 10px;
+  left: -10px;
+  content: '';
+  width: 0;
+  height: 0;
+  border-right: solid 10px rgba(255, 255, 255);
+  border-bottom: solid 8px transparent;
+  border-top: solid 8px transparent;
+}
