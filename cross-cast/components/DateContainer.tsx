@@ -1,6 +1,6 @@
 "use client"
 
-import { Divider } from "@chakra-ui/react"
+import { Divider, Grid, GridItem } from "@chakra-ui/react"
 
 export default function DateContainer({
   children,
@@ -8,10 +8,13 @@ export default function DateContainer({
   children: React.ReactNode | React.ReactNode[]
 }) {
   return (
-    <div>
-      {children}
-      
-      <Divider width={20} />
+    <div style={{ backgroundColor: `#${Math.floor(Math.random()*16777215).toString(16)}` }}>
+      <GridItem>
+        {children}
+      </GridItem>
+      <GridItem>
+        <Divider  width={20} />
+      </GridItem>
     </div>
   )
 }

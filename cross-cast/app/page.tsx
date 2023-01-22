@@ -1,22 +1,13 @@
 import { GenericPost } from '../types/all'
-import MessageCardContainer from '../components/MessageCardContainer'
+import MainContainer from '@/components/MainContainer';
 
 export default async function Home() {
+  const data = await (await fetch(`${process.env.PUBLIC_URL}/api/twitter?days=7&user=potus`)).json() as GenericPost[];
+  console.log(JSON.stringify(data));
 
-  const data = await (await fetch(process.env.PUBLIC_URL + "/api/github?owner=vercel&repo=next.js")).json() as GenericPost;
   return (
     <main>
-        <MessageCardContainer post={data}/>
+        <MainContainer posts={data} />
     </main>
   )
 }
-
-const fetcher = async (url: string) => {
-  const res = await fetch(url);
-  const data = await res.json();
-
-  if (res.status !== 200){
-    throw new Error("Server Error");
-  }
-  return data;
-};

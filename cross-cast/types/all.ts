@@ -10,7 +10,7 @@ export type GenericPost = {
     avatar?: string
     url?: string
   }
-  date: Date
+  date: string | Date
 }
 
 export enum Origin {

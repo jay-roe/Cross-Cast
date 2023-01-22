@@ -53,7 +53,7 @@ export interface ReleaseRaw {
    */
   prerelease: boolean
   created_at: string
-  published_at: Date | null
+  published_at: string | null
   author: SimpleUser
   assets: ReleaseAsset[]
   body_html?: string

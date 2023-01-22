@@ -1,6 +1,6 @@
 'use client';
 
-import type { GenericPost } from '@/types/all';
+import { GenericPost, Origin } from '@/types/all';
 import { Card,
   CardHeader,
   CardBody,
@@ -32,7 +32,7 @@ export default function MessageCard(props: { post: GenericPost }) {
       )}
       <CardBody>
         <span className='overwriteChakra'>
-          <ReactMarkdown remarkPlugins={[remarkGfm, [remarkGithub, { repository: gitRepository }]]}>{props.post.content}</ReactMarkdown>
+          <ReactMarkdown remarkPlugins={[remarkGfm, [remarkGithub, { repository: gitRepository }]]}>{props.post.content.replaceAll('\n', '\r\n')}</ReactMarkdown>
         </span>
         {props.post.image && (
           <Image
@@ -65,7 +65,7 @@ export default function MessageCard(props: { post: GenericPost }) {
             <Avatar name={props.post.author.name} size='md' src={props.post.author.avatar} />
             {/* TODO: Maybe sm instead? */}
           </a>
-          <span>{props.post.date}</span>
+          <span>{props.post.date.toLocaleString()}</span>
         </Flex>
       </CardFooter>
     </Card>
