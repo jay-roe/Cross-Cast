@@ -56,14 +56,24 @@ export default async function handler(
     tweets_since_date.setDate(tweets_since_date.getDate() - days_time);
 
     // make tweet request
-    const raw_tweets_response = (await client.tweets.usersIdTweets(user_id, {
+    const raw_tweets_response = await client.tweets.usersIdTweets(user_id, {
         exclude: ["replies", "retweets"],
         start_time: tweets_since_date.toISOString(),
-        "tweet.fields": ["id", "text", "public_metrics", "created_at"]
-    })).data;
+        expansions: ["author_id"],
+        "tweet.fields": ["id", "author_id", "text", "public_metrics", "created_at"],
+        "user.fields": ["profile_image_url"],
+    });
+
+    const raw_tweets_data = raw_tweets_response.data;
+    const raw_tweets_user = raw_tweets_response.includes;
+
+    let profile_image_url = "";
+    raw_tweets_user?.users?.forEach(user => {
+        profile_image_url = user.profile_image_url || "";
+    })
 
     // convert raw tweet response to our type
-    raw_tweets_response?.forEach(function (data) {
+    raw_tweets_data?.forEach(function (data) {
         const tweetMetrics = {
             retweet_count: data.public_metrics?.retweet_count || 0,
             reply_count: data.public_metrics?.reply_count || 0,
@@ -83,7 +93,9 @@ export default async function handler(
                 { icon: "replies", numInteractions: tweetMetrics.reply_count }
             ],
             author: {
-                name: user
+                name: user,
+                avatar: profile_image_url,
+                url: `https://twitter.com/${user}`
             },
             date: new Date(Date.parse(data.created_at || ""))
         }
