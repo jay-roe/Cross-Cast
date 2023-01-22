@@ -43,7 +43,6 @@ export default async function handler(
 
 
     if (integration) {
-        console.log(integration)
         if (integration == Origin.GitHub) {
             const data = await (await fetch(githubRequest)).json() as GenericPost[];
             res.status(200).json(data)
