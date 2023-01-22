@@ -1,9 +1,11 @@
 type TwitterConfig = {
   user: string
+  maxCountDefault: string
 }
 
 let twitterConfig: TwitterConfig = {
-  user: "vercel"
+  user: "potus",
+  maxCountDefault: "5"
 }
 
 export default twitterConfig;
