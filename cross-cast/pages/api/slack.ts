@@ -48,7 +48,7 @@ export enum Origin {
 
 type SlackRequestParams = {
   days: string
-  elementCount: string
+  maxCount: string
 }
 
 
@@ -62,10 +62,10 @@ export default async function handler(
   res: NextApiResponse<GenericPost[]>
 ) {
   const desired_channels: string[] = ["crosscast", "general", "random"]
-  const { days , elementCount } = req.query as SlackRequestParams;
+  const { days , maxCount } = req.query as SlackRequestParams;
 
   const daysTime = parseInt(days)
-  const elementCountInt = parseInt(elementCount)
+  const elementCountInt = parseInt(maxCount)
 
   const time = new Date();
   time.setDate(time.getDate() - daysTime) //make var
