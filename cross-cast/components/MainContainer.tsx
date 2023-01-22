@@ -59,7 +59,7 @@ export default function MainContainer({ posts } : { posts: GenericPost[] }) {
     <Grid>
       <Flex justifyContent='center' alignItems='center'>
         <h1 style={{ textAlign: 'center', marginBlock: '1em' }}>CrossCast Timeline</h1>
-        <IconButton ref={btnRef} colorScheme='teal' onClick={onOpen} icon={<AiOutlineMenu />} />
+        <IconButton aria-label='Menu' ref={btnRef} colorScheme='teal' onClick={onOpen} icon={<AiOutlineMenu />} />
         <Drawer
           isOpen={isOpen}
           placement='right'
