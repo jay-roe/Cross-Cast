@@ -91,12 +91,15 @@ export default function MainContainer({ posts } : { posts: GenericPost[] }) {
                   <Switch id='filterType' isChecked={filterType === TweetFilter.mostLiked} onChange={e => setFilterType(e.target.checked ? TweetFilter.mostLiked : TweetFilter.latest)} />
                   <FormLabel style={{ marginRight: '0' }} htmlFor='filterType'>Most Liked</FormLabel>
                 </Flex>
-                <Select value={integration} onChange={e => handleIntegrationChange(e.target.value)}>
+
+                <h3 style={{ marginBottom: '0.5em' }}>Show these integrations:</h3>
+                <Select style={{ marginBottom: '0.5em' }} id='selectIntegration' value={integration} onChange={e => handleIntegrationChange(e.target.value)}>
                   <option value=''>All</option>
                   <option value='GITHUB'>GitHub</option>
                   <option value='SLACK'>Slack</option>
                   <option value='TWITTER'>Twitter</option>
                 </Select>
+
                 <Button onClick={() => handleSubmit()}>Save</Button>
               </FormControl>
             </DrawerBody>
