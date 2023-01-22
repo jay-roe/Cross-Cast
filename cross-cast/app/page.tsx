@@ -1,4 +1,4 @@
-import { GenericPost } from '@/types/all';
+import { GenericPost } from '../types/all'
 import MessageCardContainer from '../components/MessageCardContainer'
 
 export default async function Home() {
