@@ -1,4 +1,6 @@
 # CrossCast
+<img src="https://user-images.githubusercontent.com/55419809/214406897-aaa348b6-7776-4ded-a748-c45e143c7e1a.png" alt="CrossCast logo" width="100" />
+
 Welcome to CrossCast!
 
 🔗 View the website live here: https://crosscast.live/
@@ -7,6 +9,10 @@ This project was made as part of ConUHacksVII. The entire project was planned, d
 
 🏆 We are proud to announce that CrossCast was awarded first place in the Mirego sponsorship challenge!
 
+
+https://user-images.githubusercontent.com/55419809/214418144-a396eb81-a9a7-43bd-9f54-00df6db5185c.mp4
+
+ 
 ## 🎨 Inspiration
 We wanted every employee to stay up to date with their company's activities and be able to populate their own timeline with their unique qualities. In addition, our goal was to highlight the achievements of individual members of the team who are standing out across all teams. 
 
